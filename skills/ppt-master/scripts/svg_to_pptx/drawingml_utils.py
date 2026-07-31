@@ -67,9 +67,10 @@ FONT_FALLBACK_WIN = {
     'PingFang SC': 'Microsoft YaHei',
     'PingFang TC': 'Microsoft JhengHei',
     'PingFang HK': 'Microsoft JhengHei',
-    'Hiragino Sans': 'Microsoft YaHei',
+    # Japanese Hiragino: keep as-is (mapping to SimSun/YaHei breaks JP decks on macOS)
+    # 'Hiragino Sans': → keep as 'Hiragino Sans' (do not map)
+    # 'Hiragino Mincho ProN': → keep as 'Hiragino Mincho ProN' (do not map)
     'Hiragino Sans GB': 'Microsoft YaHei',
-    'Hiragino Mincho ProN': 'SimSun',
     'STHeiti': 'SimHei',
     'STSong': 'SimSun',
     'STKaiti': 'KaiTi',
@@ -437,6 +438,10 @@ def is_cjk_char(ch: str) -> bool:
     cp = ord(ch)
     return (0x4E00 <= cp <= 0x9FFF or 0x3400 <= cp <= 0x4DBF or
             0x2E80 <= cp <= 0x2EFF or 0x3000 <= cp <= 0x303F or
+            0x3040 <= cp <= 0x309F or  # Hiragana (Japanese)
+            0x30A0 <= cp <= 0x30FF or  # Katakana (Japanese)
+            0x31F0 <= cp <= 0x31FF or  # Katakana Phonetic Extensions
+            0xAC00 <= cp <= 0xD7AF or  # Hangul Syllables (Korean)
             0xFF00 <= cp <= 0xFFEF or 0xF900 <= cp <= 0xFAFF or
             0x20000 <= cp <= 0x2A6DF)
 
